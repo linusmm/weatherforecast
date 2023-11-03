@@ -9,6 +9,10 @@ jupyter: python3
 Today
 
 ```{python}
+# Imports and get Data
+import visuals
+import apicalls
 
+from IPython.display import display, Markdown
 
 ```

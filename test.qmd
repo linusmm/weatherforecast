@@ -17,16 +17,35 @@ ratio = 0.1
 und jetzt kommt python code
 ```{python}
 import visuals
-for i in {1,2,3}:
-  print(alpha)
-  
-x = 43
+import apicalls
+from datetime import datetime
+import pandas as pd
+
+weekdays_dict = {
+  1:"Monday", 
+  2:"Tuesday", 
+  3:"Wednesday",
+  4:"Thursday",
+  5:"Friday",
+  6:"Saturday",
+  7:"Sunday"}
+
+data = apicalls.get_data(detailed=True)
+print(data['daily']['time'])
+
 
 ```
 alpha
 
 ```{python}
-print(x)
+from IPython.display import display, Markdown
+day1, day2, day3, day4 = "Today", "T", "test", "test"
+
+display(Markdown(
+  f"""|{day1}|{day2}|{day3}|{day4}|
+|--|--|--|--|
+| ![]({visuals.get_sky("sun")}) | oh | | dis klappt|"""
+))
 ```
 
 Weather Table
