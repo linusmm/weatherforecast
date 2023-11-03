@@ -7,5 +7,36 @@ jupyter: python3
 ---
 
 ```{python}
+#| tags: [parameters]
+
+alpha = 0.1
+ratio = 0.1
+```
+
+# Das ist ein MD test
+und jetzt kommt python code
+```{python}
+import visuals
+for i in {1,2,3}:
+  print(alpha)
+  
+x = 43
 
 ```
+alpha
+
+```{python}
+print(x)
+```
+
+Weather Table
+
+|1 | 2|
+|--|--|
+| ![](http://www.clker.com/cliparts/5/3/a/3/1194989210401174033sun01.svg) | x |
+
+
+
+|Today|Tmrw| 
+|--|--|
+

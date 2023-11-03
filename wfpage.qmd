@@ -1,0 +1,14 @@
+---
+title: "Weather Forecast Montpellier"
+format:
+  html:
+    code-fold: true
+jupyter: python3
+---
+
+Today
+
+```{python}
+
+
+```
