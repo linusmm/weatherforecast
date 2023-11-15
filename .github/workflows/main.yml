@@ -1,0 +1,25 @@
+name: Deploy Quarto to GitHub Pages
+
+on:
+  schedule:
+    - cron: '0 0 * * *' 
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Install Quarto
+        run: npm install -g quarto-cli
+
+      - name: Build Quarto Project
+        run: quarto build
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_quarto
