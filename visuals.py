@@ -11,10 +11,7 @@ weekdays_dict = {
   6:"Sunday"}
 
 wmo_code_map:{
-    0: 'clear sky',
-    1: 'mainly clear', 
-    2: 'partly cloudy', 
-    3: 'overcast',
+
     45: 'fog', 48: 'depositing rime fog',
     51: 'light drizzle', 53: 'moderate drizzle', 55: 'dense drizzle',
     56: 'light freezing drizzle', 57: 'dense freezing drizzle',
@@ -41,13 +38,28 @@ def get_sky(weather: str):
         return None
 
 
+def get_sky_wmo(wmo_code):
+    """ fct to get the according image for every kind of weather"""
+    if wmo_code <= 3:
+        return "(http://www.clker.com/cliparts/5/3/a/3/1194989210401174033sun01.svg)"
+    elif (wmo_code > 40) & (wmo_code < 60):
+        return "(http://www.clker.com/cliparts/0/a/e/a/11949892041568310221cloudy01.svg)"
+    elif (wmo_code >=60) & (wmo_code < 70):
+        return "(http://www.clker.com/cliparts/4/2/0/7/11949892071155302510rain.svg)"
+    elif (wmo_code):
+        return "(http://www.clker.com/cliparts/6/b/a/a/11954437221169142395snowfall_raoul_rene_melc_01.svg)"
+    
+
+
+
 def get_weekday(daily_data):
     """ takes daily data and returns the respective weekday"""
     return weekdays_dict[datetime.strptime(daily_data, '%Y-%m-%d').weekday()]
 
 
 def convert_date(date:str, format):
-    return datetime.strptime(date, format) + timedelta(hours=1)
+    """converts time to local time"""
+    return datetime.strptime(date, format) + timedelta(hours=1) 
 
 
 def create_MD_weather_table(data):
@@ -65,10 +77,12 @@ def create_MD_weather_table_alt(data):
     dates = [convert_date(x, '%Y-%m-%d').strftime('%d.%m.') for x
               in data['daily']['time']]
     #conditions = ['notgood','good','notgood','perfect']
-    visuals = [f"({get_sky('sun')})", 
-               f"({get_sky('sun')})", 
-               f"({get_sky('rain')})",
-               f"({get_sky('scloudy')})"]
+    graphics = [get_sky_wmo(x) for x in data['daily']['weathercode']]
+    #[f"({get_sky('sun')})", 
+     ##          f"({get_sky('sun')})", 
+        #       f"({get_sky('rain')})",
+       #        f"({get_sky('scloudy')})"]
+    #visuals = [f"({get_sky_wmo({x})})" for x in data['daily']['weathercode']]
     temp_max = [str(x) for x in data['daily']['temperature_2m_max']]
     temp_min = [str(x) for x in data['daily']['temperature_2m_min']]
     sunrise = [convert_date(x, '%Y-%m-%dT%H:%M').strftime('%H:%M') for x
@@ -84,7 +98,7 @@ def create_MD_weather_table_alt(data):
     table += "| " + " | ".join(dates) + " |\n"
 
     # Create rows with weather graphics
-    table += f"| ![]" + " | ![]".join(visuals) + " |\n"
+    table += f"| ![]" + " | ![]".join(graphics) + " |\n"
 
     # temperature
     table += f"| " + "° max |".join(temp_max) + "° max |\n"
